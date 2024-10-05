@@ -3,33 +3,33 @@
 
 int	print_message(char const *format, va_list args)
 {
-	int		ret;
+	int		n_ret;
 
-	ret = 0;
+	n_ret = 0;
 	while (*format)
 	{
 		if (*format == '%')
 		{
 			format++;
-
+			n_ret += print_format(&format, args);
 		}
 		else
 		{
 			ft_putchar(*format);
-			ret++;
+			n_ret++;
 		}
 		format++;
 	}
-	return (ret);
+	return (n_ret);
 }
 
 int	ft_printf(char const *format, ...)
 {
 	va_list	args;
-	int		ret;
+	int		n_ret;
 
 	va_start(args, format);
-	ret = print_message(format, args);
+	n_ret = print_message(format, args);
 	va_end(args);
-	return (ret);
+	return (n_ret);
 }
