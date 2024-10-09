@@ -3,7 +3,7 @@
 
 int	print_char(char c)
 {
-	ft_putchar(c);
+	ft_putchar_fd(c, 1);
 	return (1);
 }
 
@@ -19,7 +19,7 @@ int	print_string(char *str)
 	}
 	while (*str)
 	{
-		ft_putchar(*str);
+		ft_putchar_fd(*str, 1);
 		str++;
 		n_ret++;
 	}
@@ -32,6 +32,7 @@ int	print_format(char const *format, va_list args)
 		return (print_char(va_arg(args, int)));
 	else if (*format == 's')
 		return (print_string(va_arg(args, char *)));
+		/*
 	else if (*format == 'd' || *format == 'i')
 		return (print_int(va_arg(args, int)));
 	else if (*format == 'u')
@@ -44,10 +45,11 @@ int	print_format(char const *format, va_list args)
 		return (print_pointer(va_arg(args, void *)));
 	else if (*format == '%')
 		return (print_char('%'));
+		*/
 	else
 	{
-		ft_putchar('%');
-		ft_putchar(*format);
+		ft_putchar_fd('%', 1);
+		ft_putchar_fd(*format, 1);
 		return (2);
 	}
 }
@@ -66,7 +68,7 @@ int	print_message(char const *format, va_list args)
 		}
 		else
 		{
-			ft_putchar(*format);
+			ft_putchar_fd(*format, 1);
 			n_ret++;
 		}
 		format++;
