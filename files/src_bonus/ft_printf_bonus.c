@@ -110,13 +110,102 @@ int	print_format_flags(va_list args, t_flags flags)
 	else if (flags.type == 'd' || flags.type == 'i')
 	{
 		number = va_arg(args, int);
-		n_str = 
+		str = ft_itoa(number);
+		n_str = ft_strlen(str);
+		n_aux = n_str;
 		if (flags.zero && flags.dot == 0 && flags.minus == 0)
-		{}
+		{
+			if (number < 0)
+				print_char('-');
+			else if (number >= 0 && flags.plus)
+			{
+				print_char('+');
+				n_str++;
+				n_aux++;
+			}
+			else if (flags.space)
+			{
+				print_char(' ');
+				n_str++;
+				n_aux++;
+			}
+			while (flags.width-- > n_aux)
+				n_str += print_char('0');
+			if (number < 0)
+				print_string(str + 1);
+			else
+				print_string(str);
+		}
 		else if (flags.minus)
-		{}
+		{
+			if (number < 0)
+				print_char('-');
+			else if (number >= 0 && flags.plus)
+			{
+				print_char('+');
+				n_str++;
+				n_aux++;
+			}
+			else if (flags.space)
+			{
+				print_char(' ');
+				n_str++;
+				n_aux++;
+			}
+			if (flags.precision > n_aux)
+			{
+				while (flags.precision-- > n_aux)
+					n_str += print_char('0');
+			}
+			if (number < 0)
+				print_string(str + 1);
+			else
+				print_string(str);
+			n_aux = n_str;
+			while (flags.width-- > n_aux)
+				n_str += print_char(' ');
+		}
 		else
-		{}
+		{
+			if (number < 0 || flags.plus || flags.space)
+			{
+				if (flags.width > flags.precision + 1)
+					while (flags.width-- > flags.precision + 1)
+						n_str += print_char(' ');
+			}
+			else
+				if (flags.width > flags.precision)
+					while (flags.width-- > flags.precision)
+						n_str += print_char(' ');
+			if (number < 0)
+			{
+				print_char('-');
+				if (flags.precision > n_aux - 1)
+					while (flags.precision-- > n_aux - 1)
+						n_str += print_char('0');
+			}
+			else
+			{
+				if (flags.plus)
+				{
+					print_char('+');
+					n_str++;
+				}
+				else if (flags.space)
+				{
+					print_char(' ');
+					n_str++;
+				}
+				if (flags.precision > n_aux)
+					while (flags.precision-- > n_aux)
+						n_str += print_char('0');
+			}
+			if (number < 0)
+				print_string(str + 1);
+			else
+				print_string(str);
+		}
+		free(str);
 	}
 
 	return (n_str);
