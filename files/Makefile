@@ -2,10 +2,13 @@ NAME = libftprintf.a
 CC = cc
 LIB = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
-SRCS = ft_printf.c
+CFLAGS = -Wall -Wextra #-Werror
+HEADER = src/ft_printf.h
+SRCS = src/ft_printf.c src/ft_printf_utils.c src/ft_printf_utils2.c
 OBJS = $(SRCS:.c=.o)
-HEADER = ft_printf.h
+SRCS_BONUS = src_bonus/ft_printf_bonus.c src_bonus/ft_printf_utils_bonus.c \
+				src_bonus/ft_printf_utils2_bonus.c
+OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME)
 
@@ -14,11 +17,16 @@ $(NAME): $(OBJS)
 	cp libft/libft.a $(NAME)
 	$(LIB) $(NAME) $(OBJS)
 
+bonus: $(OBJS_BONUS)
+	$(MAKE) -C libft
+	cp libft/libft.a $(NAME)
+	$(LIB) $(NAME) $(OBJS_BONUS)
+
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(OBJS_BONUS)
 	$(MAKE) -C libft clean
 
 fclean: clean
