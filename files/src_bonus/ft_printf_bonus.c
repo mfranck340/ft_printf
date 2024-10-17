@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
+#include <stdio.h>
 
 int	print_format(char const *format, va_list args)
 {
@@ -503,6 +504,10 @@ int	print_message(char const *format, va_list args)
 			if (ft_strchr(FLAGS, *(format + 1)) || ft_isdigit(*(format + 1)))
 			{
 				n_aux = get_flags(&flags, ++format);
+				//printf(" || FLAGS: %d - %d - %d - %d || \n", flags.width, flags.minus, flags.zero, flags.precision);
+				//printf(" || FLAGS: %d - %d - %d - %d || \n", flags.hashtag, flags.space, flags.plus, flags.type);
+				//printf(" || FLAGS: %d || \n", flags.dot);
+				//printf("N_AUX: %d\n", n_aux);
 				if (n_aux == -1)
 					return (-1);
 				if (n_aux == -2)

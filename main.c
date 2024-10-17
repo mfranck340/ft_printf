@@ -37,7 +37,7 @@ int    main(void)
     printf("printf: %d\n\n\n", a);
     printf("\n------------------------------------\n");*/
 
-    /*
+    
     int num = 42;
     unsigned int unum = 3000;
     float fnum = 3.14159;
@@ -79,7 +79,13 @@ int    main(void)
     printf("13. |%20p|\n", ptr);     // Ancho mínimo de 20
     printf("14. |%-20p|\n", ptr);    // Alineación a la izquierda, ancho mínimo de 20
     ft_printf("13. |%20p|\n", ptr);     // Ancho mínimo de 20
-    ft_printf("14. |%-20p|\n", ptr); */
+    ft_printf("14. |%-20p|\n", ptr); 
+
+    int a;
+    a = ft_printf("%7.5s", "bombastic");
+    ft_printf("LEN: %d\n", a);
+    a = printf("%7.5s", "bombastic");
+    printf("LEN: %d\n", a);
 
 /*
     int a = 42, b = -56;
@@ -117,6 +123,9 @@ int    main(void)
     printf("6. |%+10d| |%-#8x| |%-#8.3X|\n", b, a, d);
     ft_printf("6. |%+10d| |%-#8x| |%-#8.3X|\n", b, a, d);*/
 
+
+
+/*
     int a = 2147483647, b = -2147483648;
     unsigned int c = 0, d = 4294967295u;
     char *str1 = "EdgeCaseTesting", *str2 = "OvercomplicatedOutput";
@@ -191,7 +200,7 @@ int    main(void)
     printf("LEN: %d\n", num);
     num = ft_printf("10. |%.4s| |%+80.70d| |%-#80.75x|\n", str2, b, a);
     printf("LEN: %d\n", num);
-    printf("\n------------------------------------\n");
+    printf("\n------------------------------------\n");*/
 
     return (0);
 }

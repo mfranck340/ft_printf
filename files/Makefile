@@ -3,7 +3,8 @@ CC = cc
 LIB = ar rcs
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror
-HEADER = src/ft_printf.h
+HEADER = include/ft_printf.h
+HEADER_BONUS = include/ft_printf_bonus.h
 SRCS = src/ft_printf.c src/ft_printf_utils.c src/ft_printf_utils2.c
 OBJS = $(SRCS:.c=.o)
 SRCS_BONUS = src_bonus/ft_printf_bonus.c src_bonus/ft_printf_utils_bonus.c \
@@ -21,6 +22,9 @@ bonus: $(OBJS_BONUS)
 	$(MAKE) -C libft
 	cp libft/libft.a $(NAME)
 	$(LIB) $(NAME) $(OBJS_BONUS)
+
+src_bonus/%.o: src_bonus/%.c $(HEADER_BONUS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@

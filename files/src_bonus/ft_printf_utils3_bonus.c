@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ft_printf.h"
+#include "../include/ft_printf_bonus.h"
+#include <stdio.h>
 
 int	get_flag_number(int *flag, char const *format, int index)
 {
@@ -53,7 +54,7 @@ int	handle_binary_flags(const char *format, t_flags *flags, int *n_flags)
 {
 	int	n_aux;
 
-	n_aux = turn_on_flags(format, flags, n_flags);
+	n_aux = turn_on_flags(format, flags, *n_flags);
 	if (n_aux == -2 || n_aux == 1)
 		return (n_aux);
     (*n_flags)++;
@@ -99,11 +100,14 @@ int get_flags(t_flags *flags, char const *format)
 		n_aux = handle_width_precision(format, flags, &n_flags);
 		if (n_aux == -1)
 			return (-1);
-		n_aux = handle_binary_flags(format, flags, &n_flags);
-		if (n_aux == -2)
-			return (-2);
-		if (n_aux == 1)
-			break ;
+		if (format[n_flags] != '.')
+		{
+			n_aux = handle_binary_flags(format, flags, &n_flags);
+			if (n_aux == -2)
+				return (-2);
+			if (n_aux == 1)
+				break ;
+		}
 	}
 	return (n_flags);
 }
