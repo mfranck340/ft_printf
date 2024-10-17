@@ -2,12 +2,12 @@ NAME = libftprintf.a
 CC = cc
 LIB = ar rcs
 RM = rm -f
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -Werror
 HEADER = src/ft_printf.h
 SRCS = src/ft_printf.c src/ft_printf_utils.c src/ft_printf_utils2.c
 OBJS = $(SRCS:.c=.o)
 SRCS_BONUS = src_bonus/ft_printf_bonus.c src_bonus/ft_printf_utils_bonus.c \
-				src_bonus/ft_printf_utils2_bonus.c
+				src_bonus/ft_printf_utils2_bonus.c src_bonus/ft_printf_utils3_bonus.c
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME)

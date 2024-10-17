@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
-#include <stdio.h>
-#include <unistd.h>
 
 int	print_format(char const *format, va_list args)
 {
@@ -491,65 +489,6 @@ int	print_format_flags(va_list args, t_flags flags)
 	return (n_str);
 }
 
-int get_flags(t_flags *flags, char const *format)
-{
-	int	n_flags;
-
-	n_flags = 0;
-	ft_memset(flags, 0, sizeof(t_flags));
-	while (format[n_flags])
-	{
-		//printf("I: %c\n", format[n_flags]);
-		if (format[n_flags] != '0' && ft_isdigit(format[n_flags]) && flags->width == 0)
-		{
-			while (ft_isdigit(format[n_flags]))
-			{
-				if (flags->width > (INT_MAX - (format[n_flags] - '0')) / 10)
-					return (-1);
-				flags->width = flags->width * 10 + format[n_flags] - '0';
-				n_flags++;
-			}
-		}
-		else if (format[n_flags] == '.' && flags->dot == 0)
-		{
-			flags->dot = 1;
-			if (ft_isdigit(format[n_flags + 1]))
-			{
-				while (ft_isdigit(format[++n_flags]))
-				{
-					if (flags->precision > (INT_MAX - (format[n_flags] - '0')) / 10)
-						return (-1);
-					flags->precision = flags->precision * 10 + format[n_flags] - '0';
-				}
-			}
-			else
-				n_flags++;
-		}
-		else
-		{
-			if (format[n_flags] == '-' && flags->width == 0)
-				flags->minus = 1;
-			else if (format[n_flags] == '0' && flags->width == 0)
-				flags->zero = 1;
-			else if (format[n_flags] == '+' && flags->width == 0)
-				flags->plus = 1;
-			else if (format[n_flags] == ' ' && flags->width == 0)
-				flags->space = 1;
-			else if (format[n_flags] == '#' && flags->width == 0)
-				flags->hashtag = 1;
-			else if (ft_strchr(CONVERSIONS, format[n_flags]))
-			{
-				flags->type = format[n_flags];
-				break ;
-			}
-			else
-				return (-2);
-			n_flags++;
-		}
-	}
-	return (n_flags);
-}
-
 int	print_message(char const *format, va_list args)
 {
 	int		n_ret;
@@ -564,10 +503,6 @@ int	print_message(char const *format, va_list args)
 			if (ft_strchr(FLAGS, *(format + 1)) || ft_isdigit(*(format + 1)))
 			{
 				n_aux = get_flags(&flags, ++format);
-				//printf(" || FLAGS: %d - %d - %d - %d || \n", flags.width, flags.minus, flags.zero, flags.precision);
-				//printf(" || FLAGS: %d - %d - %d - %d || \n", flags.hashtag, flags.space, flags.plus, flags.type);
-				//printf(" || FLAGS: %d || \n", flags.dot);
-				//printf("N_AUX: %d\n", n_aux);
 				if (n_aux == -1)
 					return (-1);
 				if (n_aux == -2)
@@ -583,15 +518,14 @@ int	print_message(char const *format, va_list args)
 					if (n_aux == -1)
 						return (-1);
 				}
-				n_ret += n_aux;
 			}
 			else
 			{
 				n_aux = print_format(++format, args);
 				if (n_aux == -1)
 					return (-1);
-				n_ret += n_aux;
 			}
+			n_ret += n_aux;
 		}
 		else
 		{
