@@ -182,9 +182,7 @@ int	print_int_with_flags(va_list args, t_flags flags)
 
 int	print_format_flags(va_list args, t_flags flags)
 {
-	char *str;
 	int n_aux;
-	int	number;
 	unsigned int hex_number;
 	void	*pointer;
     int is_null;
@@ -278,8 +276,11 @@ int	print_format_flags(va_list args, t_flags flags)
 				n_str += 2;
 				n_aux += 2;
 			}
-			while (flags.width-- > n_aux)
+			while (flags.width > n_aux)
+			{
 				n_str += print_char('0');
+				flags.width--;
+			}
 			if (is_null)
             {
                 if (flags.width > 0)
