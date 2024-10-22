@@ -348,8 +348,11 @@ int	print_format_flags(va_list args, t_flags flags)
 				else
 				{
 					if (flags.width > n_aux)
-						while (flags.width-- > n_aux)
+						while (flags.width > n_aux)
+						{
 							n_str += print_char(' ');
+							flags.width--;
+						}
 				}
 			}
 			if (flags.precision > n_aux)
