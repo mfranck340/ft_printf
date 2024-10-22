@@ -117,8 +117,11 @@ int	print_int_with_flags(va_list args, t_flags flags)
 			else if (number < 0)
 			{
 				if (flags.width > n_aux)
-					while (flags.width-- > n_aux)
+					while (flags.width > n_aux)
+					{
 						n_str += print_char(' ');
+						flags.width--;
+					}
 			}
 			else
 			{
