@@ -203,9 +203,9 @@ int    main(void)
 
     int num;
     
-    num = printf("%5.0i", 0);
+    num = printf("%20.5d", -1024);
     printf("LEN: %d\n", num);
-    num = ft_printf("%5.0i", 0);
+    num = ft_printf("%20.5d", -1024);
     ft_printf("LEN: %d\n", num);
     printf("\n------------------------------------\n");
 
