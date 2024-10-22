@@ -19,6 +19,7 @@ int	print_char_with_flags(va_list args, t_flags flags)
 {
 	int	n_str;
 
+    n_str = 1;
 	if (flags.minus)
 	{
 		n_str += print_char(va_arg(args, int));
@@ -54,7 +55,7 @@ int handle_null(t_flags flags)
 	return n_str;
 }
 
-int handle_non_null_string(char *str, t_flags flags, int n_aux)
+int handle_non_null(char *str, t_flags flags, int n_aux)
 {
 	int	n_str;
 
