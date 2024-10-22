@@ -45,5 +45,7 @@ int	print_hex(unsigned long n, char *dict);
 int	print_pointer(void *p);
 int get_flags(t_flags *flags, char const *format);
 int	print_format_flags(va_list args, t_flags flags);
+int	print_char_with_flags(va_list args, t_flags flags);
+int	print_string_with_flags(va_list args, t_flags flags);
 
 #endif
