@@ -19,7 +19,7 @@ int	print_char_with_flags(va_list args, t_flags flags)
 {
 	int	n_str;
 
-    n_str = 1;
+    n_str = 0;
 	if (flags.minus)
 	{
 		n_str += print_char(va_arg(args, int));

@@ -29,6 +29,157 @@ int	ft_numpointer(void *p)
 	return(n_aux);
 }
 
+int	print_int_with_flags(va_list args, t_flags flags)
+{
+	char	*str;
+	int		n_aux;
+	int		number;
+	int		n_str;
+	int		is_null;
+
+	number = va_arg(args, int);
+	str = ft_itoa(number);
+	n_str = ft_strlen(str);
+	n_aux = n_str;
+	is_null = 0;
+	if (number == 0 && flags.dot && flags.precision == 0)
+		is_null = 1;
+	if (flags.zero && flags.dot == 0 && flags.minus == 0)
+	{
+		if (number < 0)
+			print_char('-');
+		else if (number >= 0 && flags.plus)
+		{
+			print_char('+');
+			n_str++;
+			n_aux++;
+		}
+		else if (flags.space)
+		{
+			print_char(' ');
+			n_str++;
+			n_aux++;
+		}
+		while (flags.width-- > n_aux)
+			n_str += print_char('0');
+		if (number < 0)
+			print_string(str + 1);
+		else
+			print_string(str);
+	}
+	else if (flags.minus)
+	{
+		if (number < 0)
+		{
+			print_char('-');
+			n_aux--;
+		}
+		else if (number >= 0 && flags.plus)
+		{
+			print_char('+');
+			n_str++;
+			n_aux++;
+		}
+		else if (flags.space)
+		{
+			print_char(' ');
+			n_str++;
+			n_aux++;
+		}
+		if (flags.precision > n_aux)
+		{
+			while (flags.precision-- > n_aux)
+				n_str += print_char('0');
+		}
+		if (is_null)
+		{
+			if (flags.width > 0)
+				print_char(' ');
+		}
+		else if (number < 0)
+			print_string(str + 1);
+		else
+			print_string(str);
+		n_aux = n_str;
+		while (flags.width-- > n_aux)
+			n_str += print_char(' ');
+	}
+	else
+	{
+		if (number < 0 || flags.plus || flags.space)
+		{
+			if (flags.dot && flags.precision > n_aux)
+			{
+				if (flags.width > flags.precision + 1)
+					while (flags.width-- > flags.precision + 1)
+						n_str += print_char(' ');
+			}
+			else if (number < 0)
+			{
+				if (flags.width > n_aux)
+					while (flags.width-- > n_aux)
+						n_str += print_char(' ');
+			}
+			else
+			{
+				if (flags.width > n_aux + 1)
+					while (flags.width-- > n_aux + 1)
+						n_str += print_char(' ');
+			}
+		}
+		else
+			if (flags.dot && flags.precision > n_aux)
+			{
+				if (flags.width > flags.precision)
+					while (flags.width-- > flags.precision)
+						n_str += print_char(' ');
+			}
+			else
+			{
+				if (flags.width > n_aux)
+					while (flags.width > n_aux)
+					{
+						n_str += print_char(' ');
+						flags.width--;
+					}
+			}
+		if (number < 0)
+		{
+			print_char('-');
+			if (flags.precision > n_aux - 1)
+				while (flags.precision-- > n_aux - 1)
+					n_str += print_char('0');
+		}
+		else
+		{
+			if (flags.plus)
+			{
+				print_char('+');
+				n_str++;
+			}
+			else if (flags.space)
+			{
+				print_char(' ');
+				n_str++;
+			}
+			if (flags.precision > n_aux)
+				while (flags.precision-- > n_aux)
+					n_str += print_char('0');
+		}
+		if (is_null)
+		{
+			if (flags.width > 0)
+				print_char(' ');
+		}
+		else if (number < 0)
+			print_string(str + 1);
+		else
+			print_string(str);
+	}
+	free(str);
+	return (n_str);
+}
+
 int	print_format_flags(va_list args, t_flags flags)
 {
 	char *str;
@@ -48,148 +199,7 @@ int	print_format_flags(va_list args, t_flags flags)
 	else if (flags.type == 's')
 		n_str = print_string_with_flags(args, flags);
 	else if (flags.type == 'd' || flags.type == 'i')
-	{
-		number = va_arg(args, int);
-		str = ft_itoa(number);
-		n_str = ft_strlen(str);
-		n_aux = n_str;
-        is_null = 0;
-        if (number == 0 && flags.dot && flags.precision == 0)
-            is_null = 1;
-		if (flags.zero && flags.dot == 0 && flags.minus == 0)
-		{
-			if (number < 0)
-				print_char('-');
-			else if (number >= 0 && flags.plus)
-			{
-				print_char('+');
-				n_str++;
-				n_aux++;
-			}
-			else if (flags.space)
-			{
-				print_char(' ');
-				n_str++;
-				n_aux++;
-			}
-			while (flags.width-- > n_aux)
-				n_str += print_char('0');
-			if (number < 0)
-				print_string(str + 1);
-			else
-				print_string(str);
-		}
-		else if (flags.minus)
-		{
-			if (number < 0)
-			{
-				print_char('-');
-				n_aux--;
-			}
-			else if (number >= 0 && flags.plus)
-			{
-				print_char('+');
-				n_str++;
-				n_aux++;
-			}
-			else if (flags.space)
-			{
-				print_char(' ');
-				n_str++;
-				n_aux++;
-			}
-			if (flags.precision > n_aux)
-			{
-				while (flags.precision-- > n_aux)
-					n_str += print_char('0');
-			}
-            if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-			else if (number < 0)
-				print_string(str + 1);
-			else
-				print_string(str);
-			n_aux = n_str;
-			while (flags.width-- > n_aux)
-				n_str += print_char(' ');
-		}
-		else
-		{
-			if (number < 0 || flags.plus || flags.space)
-			{
-				if (flags.dot && flags.precision > n_aux)
-				{
-					if (flags.width > flags.precision + 1)
-						while (flags.width-- > flags.precision + 1)
-							n_str += print_char(' ');
-				}
-				else if (number < 0)
-				{
-					if (flags.width > n_aux)
-						while (flags.width-- > n_aux)
-							n_str += print_char(' ');
-				}
-				else
-				{
-					if (flags.width > n_aux + 1)
-						while (flags.width-- > n_aux + 1)
-							n_str += print_char(' ');
-				}
-			}
-			else
-				if (flags.dot && flags.precision > n_aux)
-				{
-					if (flags.width > flags.precision)
-						while (flags.width-- > flags.precision)
-							n_str += print_char(' ');
-				}
-				else
-				{
-					if (flags.width > n_aux)
-						while (flags.width > n_aux)
-                        {
-                            n_str += print_char(' ');
-                            flags.width--;
-                        }
-				}
-			if (number < 0)
-			{
-				print_char('-');
-				if (flags.precision > n_aux - 1)
-					while (flags.precision-- > n_aux - 1)
-						n_str += print_char('0');
-			}
-			else
-			{
-				if (flags.plus)
-				{
-					print_char('+');
-					n_str++;
-				}
-				else if (flags.space)
-				{
-					print_char(' ');
-					n_str++;
-				}
-				if (flags.precision > n_aux)
-					while (flags.precision-- > n_aux)
-						n_str += print_char('0');
-			}
-			if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-            else if (number < 0)
-                print_string(str + 1);
-            else
-                print_string(str);
-		}
-		free(str);
-	}
+		n_str = print_int_with_flags(args, flags);
 	else if (flags.type == 'u')
 	{
 		hex_number = va_arg(args, unsigned int);
@@ -256,6 +266,9 @@ int	print_format_flags(va_list args, t_flags flags)
 		hex_number = va_arg(args, unsigned int);
 		n_str = ft_numlen(hex_number, 16);
 		n_aux = n_str;
+		is_null = 0;
+        if (hex_number == 0 && flags.dot && flags.precision == 0)
+            is_null = 1;
 		if (flags.zero && flags.dot == 0 && flags.minus == 0)
 		{
 			if (flags.hashtag && hex_number != 0)
@@ -267,7 +280,12 @@ int	print_format_flags(va_list args, t_flags flags)
 			}
 			while (flags.width-- > n_aux)
 				n_str += print_char('0');
-			if (flags.type == 'x')
+			if (is_null)
+            {
+                if (flags.width > 0)
+                    print_char(' ');
+            }
+            else if (flags.type == 'x')
 				print_hex(hex_number, HEX_LOWER);
 			else
 				print_hex(hex_number, HEX_UPPER);
@@ -285,7 +303,12 @@ int	print_format_flags(va_list args, t_flags flags)
 				while (flags.precision-- > n_aux)
 					n_str += print_char('0');
 			}
-			if (flags.type == 'x')
+			if (is_null)
+            {
+                if (flags.width > 0)
+                    print_char(' ');
+            }
+            else if (flags.type == 'x')
 				print_hex(hex_number, HEX_LOWER);
 			else
 				print_hex(hex_number, HEX_UPPER);
@@ -331,7 +354,12 @@ int	print_format_flags(va_list args, t_flags flags)
 			if (flags.precision > n_aux)
 				while (flags.precision-- > n_aux)
 					n_str += print_char('0');
-			if (flags.type == 'x')
+			if (is_null)
+            {
+                if (flags.width > 0)
+                    print_char(' ');
+            }
+            else if (flags.type == 'x')
 				print_hex(hex_number, HEX_LOWER);
 			else
 				print_hex(hex_number, HEX_UPPER);
