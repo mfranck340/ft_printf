@@ -37,7 +37,7 @@ int    main(void)
     printf("printf: %d\n\n\n", a);
     printf("\n------------------------------------\n");*/
 
-    
+    /*
     int num = 42;
     unsigned int unum = 3000;
     float fnum = 3.14159;
@@ -85,7 +85,7 @@ int    main(void)
     a = ft_printf("%7.5s", "bombastic");
     ft_printf("LEN: %d\n", a);
     a = printf("%7.5s", "bombastic");
-    printf("LEN: %d\n", a);
+    printf("LEN: %d\n", a);*/
 
 /*
     int a = 42, b = -56;
@@ -122,7 +122,6 @@ int    main(void)
     // 6. Combinación de enteros, flotantes y hexadecimales en una sola línea
     printf("6. |%+10d| |%-#8x| |%-#8.3X|\n", b, a, d);
     ft_printf("6. |%+10d| |%-#8x| |%-#8.3X|\n", b, a, d);*/
-
 
 
 /*
@@ -201,6 +200,14 @@ int    main(void)
     num = ft_printf("10. |%.4s| |%+80.70d| |%-#80.75x|\n", str2, b, a);
     printf("LEN: %d\n", num);
     printf("\n------------------------------------\n");*/
+
+    int num;
+    
+    num = printf("%5.0i", 0);
+    printf("LEN: %d\n", num);
+    num = ft_printf("%5.0i", 0);
+    ft_printf("LEN: %d\n", num);
+    printf("\n------------------------------------\n");
 
     return (0);
 }

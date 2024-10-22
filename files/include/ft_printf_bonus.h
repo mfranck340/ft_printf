@@ -44,5 +44,6 @@ int	print_unsigned(unsigned int n);
 int	print_hex(unsigned long n, char *dict);
 int	print_pointer(void *p);
 int get_flags(t_flags *flags, char const *format);
+int	print_format_flags(va_list args, t_flags flags);
 
 #endif
