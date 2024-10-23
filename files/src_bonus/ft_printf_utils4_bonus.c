@@ -98,7 +98,7 @@ void	handle_minus_flag(t_flags flags, int number, int *n_str, char *str)
     if (is_null)
     {
         if (flags.width > 0)
-            (*n_str) += print_char(' ');
+            print_char(' ');
     }
     else if (number < 0)
         print_string(str + 1);
