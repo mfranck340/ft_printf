@@ -206,20 +206,18 @@ void	handle_other_flag(t_flags flags, int number, int *n_str, char *str)
 int	print_int_with_flags(va_list args, t_flags flags)
 {
 	char	*str;
-	int		n_aux;
 	int		number;
 	int		n_str;
 
 	number = va_arg(args, int);
 	str = ft_itoa(number);
 	n_str = ft_strlen(str);
-	n_aux = n_str;
 	if (flags.zero && flags.dot == 0 && flags.minus == 0)
 		handle_zero_flag(flags, number, &n_str, str);
 	else if (flags.minus)
 		handle_minus_flag(flags, number, &n_str, str);
 	else
-		handle_other_flag();
+		handle_other_flag(flags, number, &n_str, str);
 	free(str);
 	return (n_str);
 }
