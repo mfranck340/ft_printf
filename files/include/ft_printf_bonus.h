@@ -36,16 +36,19 @@ typedef struct s_flags
 	char	type;
 }	t_flags;
 
-int	ft_printf(char const *format, ...);
-int	print_char(char c);
-int	print_string(char *str);
-int	print_int(int n);
-int	print_unsigned(unsigned int n);
-int	print_hex(unsigned long n, char *dict);
-int	print_pointer(void *p);
-int get_flags(t_flags *flags, char const *format);
-int	print_format_flags(va_list args, t_flags flags);
-int	print_char_with_flags(va_list args, t_flags flags);
-int	print_string_with_flags(va_list args, t_flags flags);
+int		ft_printf(char const *format, ...);
+int		print_char(char c);
+int		print_string(char *str);
+int		print_int(int n);
+int		print_unsigned(unsigned int n);
+int		print_hex(unsigned long n, char *dict);
+int		print_pointer(void *p);
+int 	get_flags(t_flags *flags, char const *format);
+int		print_format_flags(va_list args, t_flags flags);
+int		print_char_with_flags(va_list args, t_flags flags);
+int		print_string_with_flags(va_list args, t_flags flags);
+int		print_int_with_flags(va_list args, t_flags flags);
+void	handle_other_flag(t_flags flags, int number, int *n_str, char *str);
+int		is_null_number(int number, t_flags flags);
 
 #endif
