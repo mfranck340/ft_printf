@@ -1,15 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils4_bonus.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ffierro- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 12:21:10 by ffierro-          #+#    #+#             */
+/*   Updated: 2024/10/24 12:21:33 by ffierro-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
-
-int	ft_numlen(unsigned int n, unsigned int base)
-{
-	if (n < base)
-		return (1);
-	else
-	{
-		return (1 + ft_numlen(n / base, base));
-	}
-}
 
 int	ft_numpointer(void *p)
 {
@@ -28,129 +29,93 @@ int	ft_numpointer(void *p)
 	return(n_aux);
 }
 
-int	print_hex_with_flags(va_list args, t_flags flags)
+
+
+void	print_unsigned_message(t_flags flags, unsigned int hex_number, int is_null)
+{
+	if (is_null)
+	{
+		if (flags.width > 0)
+			print_char(' ');
+	}
+	else
+		print_unsigned(hex_number);
+}
+
+void	handle_minus_flag_unsigned(t_flags flags, unsigned int hex_number, int *n_str, int is_null)
+{
+	int n_aux;
+
+	n_aux = *n_str;
+	if (flags.precision > n_aux)
+	{
+		while (flags.precision-- > n_aux)
+			*n_str += print_char('0');
+	}
+	print_unsigned_message(flags, hex_number, is_null);
+	n_aux = *n_str;
+	while (flags.width-- > n_aux)
+		*n_str += print_char(' ');
+}
+
+void	handle_other_flag_unsigned(t_flags flags, unsigned int hex_number, int *n_str, int is_null)
+{
+	int n_aux;
+
+	n_aux = *n_str;
+	if (flags.dot && flags.precision > n_aux)
+	{
+		if (flags.width > flags.precision)
+			while (flags.width-- > flags.precision)
+				*n_str += print_char(' ');
+		if (flags.precision > n_aux)
+			while (flags.precision-- > n_aux)
+				*n_str += print_char('0');
+	}
+	else
+	{
+		if (flags.width > n_aux)
+			while (flags.width > n_aux)
+			{
+				*n_str += print_char(' ');
+				flags.width--;
+			}
+	}
+	print_unsigned_message(flags, hex_number, is_null);
+}
+	
+int	print_unsigned_with_flags(va_list args, t_flags flags)
 {
 	unsigned int hex_number;
-	int	n_str;
-	int	is_null;
-	int	n_aux;
+	int n_str;
+	int is_null;
+	int n_aux;
 
 	hex_number = va_arg(args, unsigned int);
-	n_str = ft_numlen(hex_number, 16);
+	n_str = ft_numlen(hex_number, 10);
 	n_aux = n_str;
 	is_null = 0;
 	if (hex_number == 0 && flags.dot && flags.precision == 0)
 		is_null = 1;
+
 	if (flags.zero && flags.dot == 0 && flags.minus == 0)
 	{
-		if (flags.hashtag && hex_number != 0)
-		{
-			print_char('0');
-			print_char(flags.type);
-			n_str += 2;
-			n_aux += 2;
-		}
-		while (flags.width > n_aux)
-		{
+		while (flags.width-- > n_aux)
 			n_str += print_char('0');
-			flags.width--;
-		}
-		if (is_null)
-		{
-			if (flags.width > 0)
-				print_char(' ');
-		}
-		else if (flags.type == 'x')
-			print_hex(hex_number, HEX_LOWER);
-		else
-			print_hex(hex_number, HEX_UPPER);
+		print_unsigned(hex_number);
 	}
 	else if (flags.minus)
-	{
-		if (flags.hashtag && hex_number != 0)
-		{
-			print_char('0');
-			print_char(flags.type);
-			n_str += 2;
-		}
-		if (flags.precision > n_aux)
-		{
-			while (flags.precision-- > n_aux)
-				n_str += print_char('0');
-		}
-		if (is_null)
-		{
-			if (flags.width > 0)
-				print_char(' ');
-		}
-		else if (flags.type == 'x')
-			print_hex(hex_number, HEX_LOWER);
-		else
-			print_hex(hex_number, HEX_UPPER);
-		n_aux = n_str;
-		while (flags.width-- > n_aux)
-			n_str += print_char(' ');
-	}
+		handle_minus_flag_unsigned(flags, hex_number, &n_str, is_null);
 	else
-	{
-		if (flags.hashtag && hex_number != 0)
-		{
-			if (flags.dot)
-			{
-				if (flags.width > flags.precision + 2)
-					while (flags.width-- > flags.precision + 2)
-						n_str += print_char(' ');
-			}
-			else
-			{
-				if (flags.width > n_aux + 2)
-					while (flags.width-- > n_aux + 2)
-						n_str += print_char(' ');
-			}
-			print_char('0');
-			print_char(flags.type);
-			n_str += 2;
-		}
-		else
-		{
-			if (flags.dot && flags.precision > n_aux)
-			{
-				if (flags.width > flags.precision)
-					while (flags.width-- > flags.precision)
-						n_str += print_char(' ');
-			}
-			else
-			{
-				if (flags.width > n_aux)
-					while (flags.width > n_aux)
-					{
-						n_str += print_char(' ');
-						flags.width--;
-					}
-			}
-		}
-		if (flags.precision > n_aux)
-			while (flags.precision-- > n_aux)
-				n_str += print_char('0');
-		if (is_null)
-		{
-			if (flags.width > 0)
-				print_char(' ');
-		}
-		else if (flags.type == 'x')
-			print_hex(hex_number, HEX_LOWER);
-		else
-			print_hex(hex_number, HEX_UPPER);
-	}
+		handle_other_flag_unsigned(flags, hex_number, &n_str, is_null);
 	return (n_str);
 }
+
 
 int	print_format_flags(va_list args, t_flags flags)
 {
 	int n_aux;
-	unsigned int hex_number;
 	void	*pointer;
-    int is_null;
 
 	int	n_str;
 
@@ -164,66 +129,7 @@ int	print_format_flags(va_list args, t_flags flags)
 	else if (flags.type == 'd' || flags.type == 'i')
 		n_str = print_int_with_flags(args, flags);
 	else if (flags.type == 'u')
-	{
-		hex_number = va_arg(args, unsigned int);
-		n_str = ft_numlen(hex_number, 10);
-		n_aux = n_str;
-        is_null = 0;
-        if (hex_number == 0 && flags.dot && flags.precision == 0)
-            is_null = 1;
-		if (flags.zero && flags.dot == 0 && flags.minus == 0)
-		{
-			while (flags.width-- > n_aux)
-				n_str += print_char('0');
-			print_unsigned(hex_number);
-		}
-		else if (flags.minus)
-		{
-			if (flags.precision > n_aux)
-			{
-				while (flags.precision-- > n_aux)
-					n_str += print_char('0');
-			}
-            if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-            else
-			    print_unsigned(hex_number);
-			n_aux = n_str;
-			while (flags.width-- > n_aux)
-				n_str += print_char(' ');
-		}
-		else
-		{
-			if (flags.dot && flags.precision > n_aux)
-			{
-				if (flags.width > flags.precision)
-					while (flags.width-- > flags.precision)
-						n_str += print_char(' ');
-				if (flags.precision > n_aux)
-					while (flags.precision-- > n_aux)
-						n_str += print_char('0');
-			}
-			else
-			{
-				if (flags.width > n_aux)
-					while (flags.width > n_aux)
-                    {
-						n_str += print_char(' ');
-                        flags.width--;
-                    }
-            }
-            if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-            else
-			    print_unsigned(hex_number);
-		}
-	}
+		n_str = print_unsigned_with_flags(args, flags);
 	else if (flags.type == 'x' || flags.type == 'X')
 		n_str = print_hex_with_flags(args, flags);
 	else

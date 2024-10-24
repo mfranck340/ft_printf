@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils7_bonus.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ffierro- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 12:10:59 by ffierro-          #+#    #+#             */
+/*   Updated: 2024/10/24 12:11:02 by ffierro-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
 
@@ -8,7 +19,7 @@ void	handle_sign_other(t_flags flags, int number, int *n_str, int n_aux)
 		print_char('-');
 		if (flags.precision > n_aux - 1)
 			while (flags.precision-- > n_aux - 1)
-				(*n_str) += print_char('0');  
+				(*n_str) += print_char('0');
 	}
 	else
 	{
@@ -39,11 +50,13 @@ void	handle_padding(t_flags flags, int number, int n_aux, int *n_str)
 	else if (number < 0 && flags.precision < n_aux - 1)
 	{
 		if (flags.width > n_aux)
+		{
 			while (flags.width > n_aux)
 			{
 				n_str += print_char(' ');
 				flags.width--;
 			}
+		}
 	}
 	else
 	{
@@ -64,11 +77,13 @@ void	handle_padding2(t_flags flags, int n_aux, int *n_str)
 	else
 	{
 		if (flags.width > n_aux)
+		{
 			while (flags.width > n_aux)
 			{
 				n_str += print_char(' ');
 				flags.width--;
 			}
+		}
 	}
 }
 
@@ -94,4 +109,3 @@ void	handle_other_flag(t_flags flags, int number, int *n_str, char *str)
 	else
 		print_string(str);
 }
-

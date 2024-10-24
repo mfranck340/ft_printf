@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
-#include <stdio.h>
 
 int	get_flag_number(int *flag, char const *format, int index)
 {
@@ -57,38 +56,39 @@ int	handle_binary_flags(const char *format, t_flags *flags, int *n_flags)
 	n_aux = turn_on_flags(format, flags, *n_flags);
 	if (n_aux == -2 || n_aux == 1)
 		return (n_aux);
-    (*n_flags)++;
-    return (0);
+	(*n_flags)++;
+	return (0);
 }
 
-int handle_width_precision(const char *format, t_flags *flags, int *n_flags)
+int	handle_width_precision(const char *format, t_flags *flags, int *n_flags)
 {
-    int n_aux;
+	int	n_aux;
 
-    if (format[*n_flags] != '0' && ft_isdigit(format[*n_flags]) && flags->width == 0)
-    {
-        n_aux = get_flag_number(&flags->width, format, *n_flags);
-        if (n_aux == -1)
-            return (-1);
-        *n_flags += n_aux;
-    }
-    else if (format[*n_flags] == '.' && flags->dot == 0)
-    {
-        flags->dot = 1;
-        if (ft_isdigit(format[*n_flags + 1]))
-        {
-            n_aux = get_flag_number(&flags->precision, format, ++(*n_flags));
-            if (n_aux == -1)
-                return (-1);
-            *n_flags += n_aux;
-        }
-        else
-            (*n_flags)++;
-    }
-    return (0);
+	if (format[*n_flags] != '0' && ft_isdigit(format[*n_flags])
+		&& flags->width == 0)
+	{
+		n_aux = get_flag_number(&flags->width, format, *n_flags);
+		if (n_aux == -1)
+			return (-1);
+		*n_flags += n_aux;
+	}
+	else if (format[*n_flags] == '.' && flags->dot == 0)
+	{
+		flags->dot = 1;
+		if (ft_isdigit(format[*n_flags + 1]))
+		{
+			n_aux = get_flag_number(&flags->precision, format, ++(*n_flags));
+			if (n_aux == -1)
+				return (-1);
+			*n_flags += n_aux;
+		}
+		else
+			(*n_flags)++;
+	}
+	return (0);
 }
 
-int get_flags(t_flags *flags, char const *format)
+int	get_flags(t_flags *flags, char const *format)
 {
 	int	n_flags;
 	int	n_aux;
@@ -111,5 +111,3 @@ int get_flags(t_flags *flags, char const *format)
 	}
 	return (n_flags);
 }
-
-

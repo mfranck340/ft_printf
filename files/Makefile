@@ -13,7 +13,9 @@ SRCS_BONUS = src_bonus/ft_printf_bonus.c src_bonus/ft_printf_utils_bonus.c \
 				src_bonus/ft_printf_utils4_bonus.c \
 				src_bonus/ft_printf_utils5_bonus.c \
 				src_bonus/ft_printf_utils6_bonus.c \
-				src_bonus/ft_printf_utils7_bonus.c 
+				src_bonus/ft_printf_utils7_bonus.c \
+				src_bonus/ft_printf_utils8_bonus.c \
+				src_bonus/ft_printf_utils9_bonus.c 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME)

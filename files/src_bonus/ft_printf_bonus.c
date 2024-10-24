@@ -41,23 +41,23 @@ int	print_format(char const *format, va_list args)
 
 int	handle_format(char const **format, va_list args, t_flags *flags)
 {
-	int n_aux;
+	int	n_aux;
 
-    if (ft_strchr(FLAGS, *(*format + 1)) || ft_isdigit(*(*format + 1)))
-    {
-        n_aux = get_flags(flags, ++(*format));
-        if (n_aux == -1)
-            return (-1);
-        if (n_aux == -2)
+	if (ft_strchr(FLAGS, *(*format + 1)) || ft_isdigit(*(*format + 1)))
+	{
+		n_aux = get_flags(flags, ++(*format));
+		if (n_aux == -1)
+			return (-1);
+		if (n_aux == -2)
 		{
 			ft_putchar_fd('%', 1);
-    		ft_putchar_fd(**format, 1);
-    		return (2);
+			ft_putchar_fd(**format, 1);
+			return (2);
 		}
-        (*format) += n_aux;
-        return (print_format_flags(args, *flags));
-    }
-    return (print_format(++(*format), args));
+		(*format) += n_aux;
+		return (print_format_flags(args, *flags));
+	}
+	return (print_format(++(*format), args));
 }
 
 int	print_message(char const *format, va_list args)

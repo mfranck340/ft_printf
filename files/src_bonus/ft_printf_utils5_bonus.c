@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils5_bonus.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ffierro- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 12:14:45 by ffierro-          #+#    #+#             */
+/*   Updated: 2024/10/24 12:14:48 by ffierro-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
 
@@ -32,10 +43,10 @@ int	print_char_with_flags(va_list args, t_flags flags)
 			n_str += print_char(' ');
 		n_str += print_char(va_arg(args, int));
 	}
-	return n_str;
+	return (n_str);
 }
 
-int handle_null(t_flags flags)
+int	handle_null(t_flags flags)
 {
 	int	n_str;
 
@@ -52,10 +63,10 @@ int handle_null(t_flags flags)
 			n_str += print_char(' ');
 		print_n_string("(null)", 6);
 	}
-	return n_str;
+	return (n_str);
 }
 
-int handle_non_null(char *str, t_flags flags, int n_aux)
+int	handle_non_null(char *str, t_flags flags, int n_aux)
 {
 	int	n_str;
 
@@ -72,13 +83,14 @@ int handle_non_null(char *str, t_flags flags, int n_aux)
 			n_str += print_char(' ');
 		print_n_string(str, n_aux);
 	}
-	return n_str;
+	return (n_str);
 }
 
 int	print_string_with_flags(va_list args, t_flags flags)
 {
 	char	*str;
-	int		n_aux, n_str;
+	int		n_aux;
+	int		n_str;
 
 	str = va_arg(args, char *);
 	n_str = ft_strlen(str);
@@ -86,6 +98,6 @@ int	print_string_with_flags(va_list args, t_flags flags)
 		n_str = flags.precision;
 	n_aux = n_str;
 	if (!str && (flags.dot == 0 || flags.precision >= 6))
-		return handle_null(flags);
-	return handle_non_null(str, flags, n_aux);
+		return (handle_null(flags));
+	return (handle_non_null(str, flags, n_aux));
 }
