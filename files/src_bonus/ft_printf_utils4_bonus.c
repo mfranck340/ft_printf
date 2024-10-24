@@ -15,7 +15,7 @@
 int	ft_numpointer(void *p)
 {
 	unsigned long	n;
-	int n_aux;
+	int				n_aux;
 
 	if (!p)
 		return (5);
@@ -26,7 +26,7 @@ int	ft_numpointer(void *p)
 		n = n / 16;
 		n_aux++;
 	}
-	return(n_aux);
+	return (n_aux);
 }
 
 void	handle_zero_flag_p(t_flags flags, void *pointer, int *n_str)
@@ -106,8 +106,8 @@ void	manage_padding_p(t_flags flags, int *n_str)
 
 int	print_pointer_with_flags(va_list args, t_flags flags)
 {
-	void *pointer;
-	int n_str;
+	void	*pointer;
+	int		n_str;
 
 	pointer = va_arg(args, void *);
 	n_str = ft_numpointer(pointer);
@@ -125,7 +125,7 @@ int	print_pointer_with_flags(va_list args, t_flags flags)
 		}
 		else
 		{
-			manage_padding_p(flags, n_str);
+			manage_padding_p(flags, &n_str);
 			print_hex((unsigned long) pointer, HEX_LOWER);
 		}
 	}

@@ -51,8 +51,10 @@ void	handle_other_flag(t_flags flags, int number, int *n_str, char *str);
 int		is_null_number(int number, t_flags flags);
 int		ft_numlen(unsigned int n, unsigned int base);
 void	print_hex_message(t_flags flags, unsigned int hex_number, int is_null);
-void	handle_other_flag_hex(t_flags flags, unsigned int hex_number, int *n_str, int is_null);
+void	handle_other_flag_hex(t_flags flags, unsigned int hex_number,
+			int *n_str, int is_null);
 int		print_hex_with_flags(va_list args, t_flags flags);
+int		print_unsigned_with_flags(va_list args, t_flags flags);
 int		print_pointer_with_flags(va_list args, t_flags flags);
 
 #endif

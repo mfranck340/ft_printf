@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils10_bonus.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ffierro- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 16:52:21 by ffierro-          #+#    #+#             */
+/*   Updated: 2024/10/24 16:52:26 by ffierro-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
 
-void	print_unsigned_message(t_flags flags, unsigned int hex_number, int is_null)
+void	print_unsigned_message(t_flags flags, unsigned int hex_number,
+		int is_null)
 {
 	if (is_null)
 	{
@@ -12,9 +24,10 @@ void	print_unsigned_message(t_flags flags, unsigned int hex_number, int is_null)
 		print_unsigned(hex_number);
 }
 
-void	handle_minus_flag_unsigned(t_flags flags, unsigned int hex_number, int *n_str, int is_null)
+void	handle_minus_flag_unsigned(t_flags flags, unsigned int hex_number,
+		int *n_str, int is_null)
 {
-	int n_aux;
+	int	n_aux;
 
 	n_aux = *n_str;
 	if (flags.precision > n_aux)
@@ -28,9 +41,10 @@ void	handle_minus_flag_unsigned(t_flags flags, unsigned int hex_number, int *n_s
 		*n_str += print_char(' ');
 }
 
-void	handle_other_flag_unsigned(t_flags flags, unsigned int hex_number, int *n_str, int is_null)
+void	handle_other_flag_unsigned(t_flags flags, unsigned int hex_number,
+		int *n_str, int is_null)
 {
-	int n_aux;
+	int	n_aux;
 
 	n_aux = *n_str;
 	if (flags.dot && flags.precision > n_aux)
@@ -45,21 +59,23 @@ void	handle_other_flag_unsigned(t_flags flags, unsigned int hex_number, int *n_s
 	else
 	{
 		if (flags.width > n_aux)
+		{
 			while (flags.width > n_aux)
 			{
 				*n_str += print_char(' ');
 				flags.width--;
 			}
+		}
 	}
 	print_unsigned_message(flags, hex_number, is_null);
 }
-	
+
 int	print_unsigned_with_flags(va_list args, t_flags flags)
 {
-	unsigned int hex_number;
-	int n_str;
-	int is_null;
-	int n_aux;
+	unsigned int	hex_number;
+	int				n_str;
+	int				is_null;
+	int				n_aux;
 
 	hex_number = va_arg(args, unsigned int);
 	n_str = ft_numlen(hex_number, 10);
@@ -67,7 +83,6 @@ int	print_unsigned_with_flags(va_list args, t_flags flags)
 	is_null = 0;
 	if (hex_number == 0 && flags.dot && flags.precision == 0)
 		is_null = 1;
-
 	if (flags.zero && flags.dot == 0 && flags.minus == 0)
 	{
 		while (flags.width-- > n_aux)

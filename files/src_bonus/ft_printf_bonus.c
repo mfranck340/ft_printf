@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
-#include <stdio.h>
 
 int	print_format(char const *format, va_list args)
 {
@@ -54,7 +53,7 @@ int	print_format_flags(va_list args, t_flags flags)
 	else if (flags.type == 'x' || flags.type == 'X')
 		return (print_hex_with_flags(args, flags));
 	else
-		return (print_pointer(args, flags));
+		return (print_pointer_with_flags(args, flags));
 }
 
 int	handle_format(char const **format, va_list args, t_flags *flags)
