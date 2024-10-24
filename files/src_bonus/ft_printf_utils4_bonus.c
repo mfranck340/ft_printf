@@ -28,6 +28,123 @@ int	ft_numpointer(void *p)
 	return(n_aux);
 }
 
+int	print_hex_with_flags(va_list args, t_flags flags)
+{
+	unsigned int hex_number;
+	int	n_str;
+	int	is_null;
+	int	n_aux;
+
+	hex_number = va_arg(args, unsigned int);
+	n_str = ft_numlen(hex_number, 16);
+	n_aux = n_str;
+	is_null = 0;
+	if (hex_number == 0 && flags.dot && flags.precision == 0)
+		is_null = 1;
+	if (flags.zero && flags.dot == 0 && flags.minus == 0)
+	{
+		if (flags.hashtag && hex_number != 0)
+		{
+			print_char('0');
+			print_char(flags.type);
+			n_str += 2;
+			n_aux += 2;
+		}
+		while (flags.width > n_aux)
+		{
+			n_str += print_char('0');
+			flags.width--;
+		}
+		if (is_null)
+		{
+			if (flags.width > 0)
+				print_char(' ');
+		}
+		else if (flags.type == 'x')
+			print_hex(hex_number, HEX_LOWER);
+		else
+			print_hex(hex_number, HEX_UPPER);
+	}
+	else if (flags.minus)
+	{
+		if (flags.hashtag && hex_number != 0)
+		{
+			print_char('0');
+			print_char(flags.type);
+			n_str += 2;
+		}
+		if (flags.precision > n_aux)
+		{
+			while (flags.precision-- > n_aux)
+				n_str += print_char('0');
+		}
+		if (is_null)
+		{
+			if (flags.width > 0)
+				print_char(' ');
+		}
+		else if (flags.type == 'x')
+			print_hex(hex_number, HEX_LOWER);
+		else
+			print_hex(hex_number, HEX_UPPER);
+		n_aux = n_str;
+		while (flags.width-- > n_aux)
+			n_str += print_char(' ');
+	}
+	else
+	{
+		if (flags.hashtag && hex_number != 0)
+		{
+			if (flags.dot)
+			{
+				if (flags.width > flags.precision + 2)
+					while (flags.width-- > flags.precision + 2)
+						n_str += print_char(' ');
+			}
+			else
+			{
+				if (flags.width > n_aux + 2)
+					while (flags.width-- > n_aux + 2)
+						n_str += print_char(' ');
+			}
+			print_char('0');
+			print_char(flags.type);
+			n_str += 2;
+		}
+		else
+		{
+			if (flags.dot && flags.precision > n_aux)
+			{
+				if (flags.width > flags.precision)
+					while (flags.width-- > flags.precision)
+						n_str += print_char(' ');
+			}
+			else
+			{
+				if (flags.width > n_aux)
+					while (flags.width > n_aux)
+					{
+						n_str += print_char(' ');
+						flags.width--;
+					}
+			}
+		}
+		if (flags.precision > n_aux)
+			while (flags.precision-- > n_aux)
+				n_str += print_char('0');
+		if (is_null)
+		{
+			if (flags.width > 0)
+				print_char(' ');
+		}
+		else if (flags.type == 'x')
+			print_hex(hex_number, HEX_LOWER);
+		else
+			print_hex(hex_number, HEX_UPPER);
+	}
+	return (n_str);
+}
+
 int	print_format_flags(va_list args, t_flags flags)
 {
 	int n_aux;
@@ -108,115 +225,7 @@ int	print_format_flags(va_list args, t_flags flags)
 		}
 	}
 	else if (flags.type == 'x' || flags.type == 'X')
-	{
-		hex_number = va_arg(args, unsigned int);
-		n_str = ft_numlen(hex_number, 16);
-		n_aux = n_str;
-		is_null = 0;
-        if (hex_number == 0 && flags.dot && flags.precision == 0)
-            is_null = 1;
-		if (flags.zero && flags.dot == 0 && flags.minus == 0)
-		{
-			if (flags.hashtag && hex_number != 0)
-			{
-				print_char('0');
-				print_char(flags.type);
-				n_str += 2;
-				n_aux += 2;
-			}
-			while (flags.width > n_aux)
-			{
-				n_str += print_char('0');
-				flags.width--;
-			}
-			if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-            else if (flags.type == 'x')
-				print_hex(hex_number, HEX_LOWER);
-			else
-				print_hex(hex_number, HEX_UPPER);
-		}
-		else if (flags.minus)
-		{
-			if (flags.hashtag && hex_number != 0)
-			{
-				print_char('0');
-				print_char(flags.type);
-				n_str += 2;
-			}
-			if (flags.precision > n_aux)
-			{
-				while (flags.precision-- > n_aux)
-					n_str += print_char('0');
-			}
-			if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-            else if (flags.type == 'x')
-				print_hex(hex_number, HEX_LOWER);
-			else
-				print_hex(hex_number, HEX_UPPER);
-			n_aux = n_str;
-			while (flags.width-- > n_aux)
-				n_str += print_char(' ');
-		}
-		else
-		{
-			if (flags.hashtag && hex_number != 0)
-			{
-				if (flags.dot)
-				{
-					if (flags.width > flags.precision + 2)
-						while (flags.width-- > flags.precision + 2)
-							n_str += print_char(' ');
-				}
-				else
-				{
-					if (flags.width > n_aux + 2)
-						while (flags.width-- > n_aux + 2)
-							n_str += print_char(' ');
-				}
-				print_char('0');
-				print_char(flags.type);
-				n_str += 2;
-			}
-			else
-			{
-				if (flags.dot && flags.precision > n_aux)
-				{
-					if (flags.width > flags.precision)
-						while (flags.width-- > flags.precision)
-							n_str += print_char(' ');
-				}
-				else
-				{
-					if (flags.width > n_aux)
-						while (flags.width > n_aux)
-						{
-							n_str += print_char(' ');
-							flags.width--;
-						}
-				}
-			}
-			if (flags.precision > n_aux)
-				while (flags.precision-- > n_aux)
-					n_str += print_char('0');
-			if (is_null)
-            {
-                if (flags.width > 0)
-                    print_char(' ');
-            }
-            else if (flags.type == 'x')
-				print_hex(hex_number, HEX_LOWER);
-			else
-				print_hex(hex_number, HEX_UPPER);
-		}
-	}
+		n_str = print_hex_with_flags(args, flags);
 	else
 	{
 		pointer = va_arg(args, void *);
