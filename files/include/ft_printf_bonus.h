@@ -44,7 +44,6 @@ int		print_unsigned(unsigned int n);
 int		print_hex(unsigned long n, char *dict);
 int		print_pointer(void *p);
 int		get_flags(t_flags *flags, char const *format);
-int		print_format_flags(va_list args, t_flags flags);
 int		print_char_with_flags(va_list args, t_flags flags);
 int		print_string_with_flags(va_list args, t_flags flags);
 int		print_int_with_flags(va_list args, t_flags flags);
@@ -54,5 +53,6 @@ int		ft_numlen(unsigned int n, unsigned int base);
 void	print_hex_message(t_flags flags, unsigned int hex_number, int is_null);
 void	handle_other_flag_hex(t_flags flags, unsigned int hex_number, int *n_str, int is_null);
 int		print_hex_with_flags(va_list args, t_flags flags);
+int		print_pointer_with_flags(va_list args, t_flags flags);
 
 #endif

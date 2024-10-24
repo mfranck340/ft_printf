@@ -39,6 +39,24 @@ int	print_format(char const *format, va_list args)
 	}
 }
 
+int	print_format_flags(va_list args, t_flags flags)
+{
+	if (flags.type == '%')
+		return (print_char('%'));
+	else if (flags.type == 'c')
+		return (print_char_with_flags(args, flags));
+	else if (flags.type == 's')
+		return (print_string_with_flags(args, flags));
+	else if (flags.type == 'd' || flags.type == 'i')
+		return (print_int_with_flags(args, flags));
+	else if (flags.type == 'u')
+		return (print_unsigned_with_flags(args, flags));
+	else if (flags.type == 'x' || flags.type == 'X')
+		return (print_hex_with_flags(args, flags));
+	else
+		return (print_pointer(args, flags));
+}
+
 int	handle_format(char const **format, va_list args, t_flags *flags)
 {
 	int	n_aux;
