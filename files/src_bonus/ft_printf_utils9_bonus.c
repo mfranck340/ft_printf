@@ -35,7 +35,7 @@ void	print_hex_message(t_flags flags, unsigned int hex_number, int is_null)
 		print_hex(hex_number, HEX_UPPER);
 }
 
-void	manage_padding1(t_flags flags, int n_aux, int *n_str)
+static void	manage_padding1(t_flags flags, int n_aux, int *n_str)
 {
 	if (flags.dot)
 	{
@@ -54,7 +54,7 @@ void	manage_padding1(t_flags flags, int n_aux, int *n_str)
 	*n_str += 2;
 }
 
-void	manage_padding2(t_flags flags, int n_aux, int *n_str)
+static void	manage_padding2(t_flags flags, int n_aux, int *n_str)
 {
 	if (flags.dot && flags.precision > n_aux)
 	{

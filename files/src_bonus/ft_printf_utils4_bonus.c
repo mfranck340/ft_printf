@@ -12,7 +12,7 @@
 
 #include "../include/ft_printf_bonus.h"
 
-int	ft_numpointer(void *p)
+static int	ft_numpointer(void *p)
 {
 	unsigned long	n;
 	int				n_aux;
@@ -29,7 +29,7 @@ int	ft_numpointer(void *p)
 	return (n_aux);
 }
 
-void	handle_zero_flag_p(t_flags flags, void *pointer, int *n_str)
+static void	handle_zero_flag_p(t_flags flags, void *pointer, int *n_str)
 {
 	int	n_aux;
 
@@ -51,7 +51,7 @@ void	handle_zero_flag_p(t_flags flags, void *pointer, int *n_str)
 	}
 }
 
-void	handle_minus_flag_p(t_flags flags, void *pointer, int *n_str)
+static void	handle_minus_flag_p(t_flags flags, void *pointer, int *n_str)
 {
 	int	n_aux;
 
@@ -79,7 +79,7 @@ void	handle_minus_flag_p(t_flags flags, void *pointer, int *n_str)
 	}
 }
 
-void	manage_padding_p(t_flags flags, int *n_str)
+static void	manage_padding_p(t_flags flags, int *n_str)
 {
 	int	n_aux;
 

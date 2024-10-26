@@ -12,7 +12,7 @@
 
 #include "../include/ft_printf.h"
 
-int	print_format(char const *format, va_list args)
+static int	print_format(char const *format, va_list args)
 {
 	if (*format == 'c')
 		return (print_char(va_arg(args, int)));
@@ -38,7 +38,7 @@ int	print_format(char const *format, va_list args)
 	}
 }
 
-int	print_message(char const *format, va_list args)
+static int	print_message(char const *format, va_list args)
 {
 	int		n_ret;
 	int		n_aux;

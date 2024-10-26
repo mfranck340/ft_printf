@@ -12,7 +12,7 @@
 
 #include "../include/ft_printf_bonus.h"
 
-void	handle_zero_flag_hex(t_flags flags, unsigned int hex_number,
+static void	handle_zero_flag_hex(t_flags flags, unsigned int hex_number,
 		int *n_str, int is_null)
 {
 	int	n_aux;
@@ -32,7 +32,7 @@ void	handle_zero_flag_hex(t_flags flags, unsigned int hex_number,
 	print_hex_message(flags, hex_number, is_null);
 }
 
-void	handle_minus_flag_hex(t_flags flags, unsigned int hex_number,
+static void	handle_minus_flag_hex(t_flags flags, unsigned int hex_number,
 		int *n_str, int is_null)
 {
 	int	n_aux;

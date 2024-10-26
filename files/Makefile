@@ -21,19 +21,22 @@ OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	$(MAKE) -C libft
-	cp libft/libft.a $(NAME)
+# Dependencias de $(NAME)
+$(NAME): libft $(OBJS)
 	$(LIB) $(NAME) $(OBJS)
 
-bonus: $(OBJS_BONUS)
-	$(MAKE) -C libft
-	cp libft/libft.a $(NAME)
+bonus: libft $(OBJS_BONUS)
 	$(LIB) $(NAME) $(OBJS_BONUS)
 
+libft:
+	$(MAKE) -C libft
+	cp libft/libft.a $(NAME)
+
+# Regla para compilar los archivos de bonus
 src_bonus/%.o: src_bonus/%.c $(HEADER_BONUS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
+# Regla para compilar los archivos principales
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -47,4 +50,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

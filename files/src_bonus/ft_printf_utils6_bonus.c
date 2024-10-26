@@ -12,7 +12,7 @@
 
 #include "../include/ft_printf_bonus.h"
 
-void	handle_zero_flag(t_flags flags, int number, int *n_str, char *str)
+static void	handle_zero_flag(t_flags flags, int number, int *n_str, char *str)
 {
 	int	n_aux;
 
@@ -44,7 +44,7 @@ int	is_null_number(int number, t_flags flags)
 	return (0);
 }
 
-int	handle_sign(int number, t_flags flags, int *n_str)
+static int	handle_sign(int number, t_flags flags, int *n_str)
 {
 	if (number < 0)
 	{
@@ -66,7 +66,7 @@ int	handle_sign(int number, t_flags flags, int *n_str)
 	return (0);
 }
 
-void	handle_minus_flag(t_flags flags, int number, int *n_str, char *str)
+static void	handle_minus_flag(t_flags flags, int number, int *n_str, char *str)
 {
 	int	n_aux;
 	int	is_null;

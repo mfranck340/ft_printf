@@ -12,7 +12,7 @@
 
 #include "../include/ft_printf_bonus.h"
 
-void	handle_sign_other(t_flags flags, int number, int *n_str, int n_aux)
+static void	handle_sign_other(t_flags flags, int number, int *n_str, int n_aux)
 {
 	if (number < 0)
 	{
@@ -39,13 +39,13 @@ void	handle_sign_other(t_flags flags, int number, int *n_str, int n_aux)
 	}
 }
 
-void	handle_padding(t_flags flags, int number, int n_aux, int *n_str)
+static void	handle_padding(t_flags flags, int number, int n_aux, int *n_str)
 {
 	if (flags.dot && flags.precision > n_aux)
 	{
 		if (flags.width > flags.precision + 1)
 			while (flags.width-- > flags.precision + 1)
-				n_str += print_char(' ');
+				*n_str += print_char(' ');
 	}
 	else if (number < 0 && flags.precision < n_aux - 1)
 	{
@@ -53,7 +53,7 @@ void	handle_padding(t_flags flags, int number, int n_aux, int *n_str)
 		{
 			while (flags.width > n_aux)
 			{
-				n_str += print_char(' ');
+				*n_str += print_char(' ');
 				flags.width--;
 			}
 		}
@@ -62,17 +62,17 @@ void	handle_padding(t_flags flags, int number, int n_aux, int *n_str)
 	{
 		if (flags.width > n_aux + 1)
 			while (flags.width-- > n_aux + 1)
-				n_str += print_char(' ');
+				*n_str += print_char(' ');
 	}
 }
 
-void	handle_padding2(t_flags flags, int n_aux, int *n_str)
+static void	handle_padding2(t_flags flags, int n_aux, int *n_str)
 {
 	if (flags.dot && flags.precision > n_aux)
 	{
 		if (flags.width > flags.precision)
 			while (flags.width-- > flags.precision)
-				n_str += print_char(' ');
+				*n_str += print_char(' ');
 	}
 	else
 	{
@@ -80,7 +80,7 @@ void	handle_padding2(t_flags flags, int n_aux, int *n_str)
 		{
 			while (flags.width > n_aux)
 			{
-				n_str += print_char(' ');
+				*n_str += print_char(' ');
 				flags.width--;
 			}
 		}

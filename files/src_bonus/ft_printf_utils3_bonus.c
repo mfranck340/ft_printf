@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils2.c                                 :+:      :+:    :+:   */
+/*   ft_printf_utils3_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ffierro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 20:17:12 by ffierro-          #+#    #+#             */
-/*   Updated: 2024/10/11 20:17:13 by ffierro-         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:30:53 by ffierro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
 
-int	get_flag_number(int *flag, char const *format, int index)
+static int	get_flag_number(int *flag, char const *format, int index)
 {
 	int	n_flag;
 
@@ -27,7 +27,7 @@ int	get_flag_number(int *flag, char const *format, int index)
 	return (n_flag);
 }
 
-int	turn_on_flags(const char *format, t_flags *flags, int n_aux)
+static int	turn_on_flags(const char *format, t_flags *flags, int n_aux)
 {
 	if (format[n_aux] == '-' && flags->width == 0)
 		flags->minus = 1;
@@ -49,7 +49,8 @@ int	turn_on_flags(const char *format, t_flags *flags, int n_aux)
 	return (0);
 }
 
-int	handle_binary_flags(const char *format, t_flags *flags, int *n_flags)
+static int	handle_binary_flags(const char *format, t_flags *flags,
+		int *n_flags)
 {
 	int	n_aux;
 
@@ -60,7 +61,8 @@ int	handle_binary_flags(const char *format, t_flags *flags, int *n_flags)
 	return (0);
 }
 
-int	handle_width_precision(const char *format, t_flags *flags, int *n_flags)
+static int	handle_width_precision(const char *format, t_flags *flags,
+		int *n_flags)
 {
 	int	n_aux;
 

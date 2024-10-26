@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ffierro- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 10:30:24 by ffierro-          #+#    #+#             */
-/*   Updated: 2024/10/11 10:30:26 by ffierro-         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:30:09 by ffierro-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf_bonus.h"
 
-int	print_format(char const *format, va_list args)
+static int	print_format(char const *format, va_list args)
 {
 	if (*format == 'c')
 		return (print_char(va_arg(args, int)));
@@ -38,7 +38,7 @@ int	print_format(char const *format, va_list args)
 	}
 }
 
-int	print_format_flags(va_list args, t_flags flags)
+static int	print_format_flags(va_list args, t_flags flags)
 {
 	if (flags.type == '%')
 		return (print_char('%'));
@@ -56,7 +56,7 @@ int	print_format_flags(va_list args, t_flags flags)
 		return (print_pointer_with_flags(args, flags));
 }
 
-int	handle_format(char const **format, va_list args, t_flags *flags)
+static int	handle_format(char const **format, va_list args, t_flags *flags)
 {
 	int	n_aux;
 
@@ -77,7 +77,7 @@ int	handle_format(char const **format, va_list args, t_flags *flags)
 	return (print_format(++(*format), args));
 }
 
-int	print_message(char const *format, va_list args)
+static int	print_message(char const *format, va_list args)
 {
 	int		n_ret;
 	int		n_aux;

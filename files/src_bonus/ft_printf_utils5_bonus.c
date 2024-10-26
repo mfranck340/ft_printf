@@ -12,7 +12,7 @@
 
 #include "../include/ft_printf_bonus.h"
 
-int	print_n_string(char *str, unsigned int n)
+static int	print_n_string(char *str, unsigned int n)
 {
 	int		n_ret;
 
@@ -46,7 +46,7 @@ int	print_char_with_flags(va_list args, t_flags flags)
 	return (n_str);
 }
 
-int	handle_null(t_flags flags)
+static int	handle_null(t_flags flags)
 {
 	int	n_str;
 
@@ -66,7 +66,7 @@ int	handle_null(t_flags flags)
 	return (n_str);
 }
 
-int	handle_non_null(char *str, t_flags flags, int n_aux)
+static int	handle_non_null(char *str, t_flags flags, int n_aux)
 {
 	int	n_str;
 

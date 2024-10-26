@@ -124,7 +124,6 @@ int    main(void)
     ft_printf("6. |%+10d| |%-#8x| |%-#8.3X|\n", b, a, d);*/
 
 
-/*
     int a = 2147483647, b = -2147483648;
     unsigned int c = 0, d = 4294967295u;
     char *str1 = "EdgeCaseTesting", *str2 = "OvercomplicatedOutput";
@@ -132,9 +131,9 @@ int    main(void)
     int num;
 
     // Ejemplo 1: Máximos y mínimos de enteros con precisión y alineación extrema
-    num = printf("1. |%+30.20d| |%-30.20d|\n", a, b);
+    num = printf("1. |%+30.20d|\n", a, b);
     printf("LEN: %d\n", num);
-    num = ft_printf("1. |%+30.20d| |%-30.20d|\n", a, b);
+    num = ft_printf("1. |%+30.20d|\n", a, b);
     printf("LEN: %d\n", num);
     printf("\n------------------------------------\n");
 
@@ -199,15 +198,15 @@ int    main(void)
     printf("LEN: %d\n", num);
     num = ft_printf("10. |%.4s| |%+80.70d| |%-#80.75x|\n", str2, b, a);
     printf("LEN: %d\n", num);
-    printf("\n------------------------------------\n");*/
+    printf("\n------------------------------------\n");
 
-    int num;
+    /*int num;
     
     num = printf("%20.5d", -1024);
     printf("LEN: %d\n", num);
     num = ft_printf("%20.5d", -1024);
     ft_printf("LEN: %d\n", num);
-    printf("\n------------------------------------\n");
+    printf("\n------------------------------------\n");*/
 
     return (0);
 }
